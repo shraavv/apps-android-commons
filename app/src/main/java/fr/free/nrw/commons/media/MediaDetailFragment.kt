@@ -136,9 +136,6 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
 import javax.inject.Named
-import fr.free.nrw.commons.navtab.NavTabLayout
-import fr.free.nrw.commons.contributions.MainActivity
-import fr.free.nrw.commons.navtab.NavTab
 
 class MediaDetailFragment : CommonsDaggerSupportFragment(), CategoryEditHelper.Callback {
     private var editable: Boolean = false
@@ -253,7 +250,6 @@ class MediaDetailFragment : CommonsDaggerSupportFragment(), CategoryEditHelper.C
             initialListTop = binding.mediaDetailScrollView.scrollY
         }
 
-    private lateinit var navTabLayout: NavTabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -420,39 +416,6 @@ class MediaDetailFragment : CommonsDaggerSupportFragment(), CategoryEditHelper.C
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Hide MainActivity nav tabs when this fragment is open
-        (requireActivity() as MainActivity).hideTabs()
-
-        // Initialize NavTabLayout
-        navTabLayout = binding.fragmentMainNavTabLayout
-
-        navTabLayout.setOnNavigationItemSelectedListener { item ->
-            val navTab = NavTab.of(item.order)
-            when (navTab) {
-                NavTab.CONTRIBUTIONS -> {
-                    (requireActivity() as MainActivity).setSelectedItemId(NavTab.CONTRIBUTIONS.code())
-                    true
-                }
-                NavTab.NEARBY -> {
-                    (requireActivity() as MainActivity).setSelectedItemId(NavTab.NEARBY.code())
-                    true
-                }
-                NavTab.EXPLORE -> {
-                    (requireActivity() as MainActivity).setSelectedItemId(NavTab.EXPLORE.code())
-                    true
-                }
-                NavTab.MORE -> {
-                    (requireActivity() as MainActivity).setSelectedItemId(NavTab.MORE.code())
-                    true
-                }
-                else -> false
-            }
-        }
-
-    }
 
     fun launchZoomActivity(view: View) {
         val hasPermission: Boolean = hasPermission(requireActivity(), PERMISSIONS_STORAGE)
